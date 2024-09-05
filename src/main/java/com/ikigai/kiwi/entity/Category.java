@@ -12,7 +12,6 @@ import java.io.Serializable;
 public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer cateId;
 
     @Column(columnDefinition = "nvarchar(255)")
     String cateNameVietNam;

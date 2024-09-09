@@ -1,9 +1,11 @@
 package com.ikigai.kiwi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 @Data
@@ -12,6 +14,7 @@ import java.io.Serializable;
 public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer cateId;
 
     @Column(columnDefinition = "nvarchar(255)")
     String cateNameVietNam;
@@ -49,4 +52,8 @@ public class Category implements Serializable {
     String cateNameThailand;
     @Column(columnDefinition = "nvarchar(255)")
     String cateNameUkraine;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "category")
+    Story story;
 }

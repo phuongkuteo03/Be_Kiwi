@@ -74,4 +74,6 @@ public interface StoryService {
     <S extends Story> List<S> findAll(Example<S> example);
 
     <S extends Story> List<S> findAll(Example<S> example, Sort sort);
+
+    List<Story> findByNameStory(String name);
 }

@@ -19,6 +19,7 @@ import java.util.function.Function;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     CategoryDAO categoryDAO;
+
     @Override
     public <S extends Category> S save(S entity) {
         return categoryDAO.save(entity);

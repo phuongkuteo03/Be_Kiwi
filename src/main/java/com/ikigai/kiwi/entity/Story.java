@@ -1,9 +1,11 @@
 package com.ikigai.kiwi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 @Data
@@ -57,6 +59,10 @@ public class Story implements Serializable {
     @Column(columnDefinition = "nvarchar(50)")
     String areaStory;
 
-    @ManyToOne @JoinColumn(name = "cateId")
+    @JsonIgnore
+    @OneToMany(mappedBy = "story")
+    List<Content> content;
+
+    @OneToOne @JoinColumn(name = "cateId")
     private Category category;
 }

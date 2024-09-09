@@ -175,4 +175,8 @@ public class StoryServiceImpl implements StoryService {
         return storyDAO.findAll(example, sort);
     }
 
+    @Override
+    public List<Story> findByNameStory(String name) {
+        return storyDAO.findByNameStory(name);
+    }
 }

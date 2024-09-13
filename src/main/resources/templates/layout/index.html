@@ -145,7 +145,7 @@
                     <td>[[${p.areaStory}]]</td>
                     <td>
                       <button class="btn btn-sm btn-primary">Chỉnh sửa</button>
-                      <button class="btn btn-sm btn-danger">Xóa</button>
+                      <a th:href="@{|/story/delete/${p.storyId]}|}" class="btn btn-sm btn-danger">Xóa</a>
                     </td>
                   </tr>
                 </tbody>

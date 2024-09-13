@@ -179,4 +179,14 @@ public class StoryServiceImpl implements StoryService {
     public List<Story> findByNameStory(String name) {
         return storyDAO.findByNameStory(name);
     }
+
+    @Override
+    public List<Story> findAllStoryNotDeleted() {
+        return storyDAO.findAllStoryNotDeleted();
+    }
+
+    @Override
+    public void deleteStory(Integer id) {
+        storyDAO.deleteStory(id);
+    }
 }

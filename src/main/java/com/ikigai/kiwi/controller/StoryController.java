@@ -27,4 +27,10 @@ public class StoryController {
         model.addAttribute("item_story", storyService.findById(id));
         return "layout/index";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteStory(@PathVariable("id") Integer id, HttpServletRequest request, Model model) {
+        storyService.deleteStory(id);
+        return "redirect:/";
+    }
 }

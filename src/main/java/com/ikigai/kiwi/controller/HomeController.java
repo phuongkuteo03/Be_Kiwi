@@ -16,11 +16,7 @@ public class HomeController {
 
     @RequestMapping({ "/", "/home/index" })
     public String home(HttpServletRequest request, Model model) throws Exception {
-//        if (request.getRemoteUser() != null) {
-//            TaiKhoan user = taiKhoanService.getOne(request.getRemoteUser());
-//            model.addAttribute("USER", user);
-//        }
-        model.addAttribute("items_story",storyService.findAll());
+        model.addAttribute("items_story",storyService.findAllStoryNotDeleted());
         return "layout/index";
     }
 }

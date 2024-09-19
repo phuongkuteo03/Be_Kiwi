@@ -1,7 +1,5 @@
 package com.ikigai.kiwi.controller;
 
-import com.ikigai.kiwi.service.CategoryService;
-import com.ikigai.kiwi.service.ContentService;
 import com.ikigai.kiwi.service.StoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,7 @@ public class HomeController {
 
     @RequestMapping({ "/", "/home/index" })
     public String home(HttpServletRequest request, Model model) throws Exception {
-        model.addAttribute("items_story",storyService.findAllStoryNotDeleted());
+        model.addAttribute("stories",storyService.findAllStoryNotDeleted());
         return "layout/index";
     }
 }

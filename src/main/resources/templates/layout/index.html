@@ -1,234 +1,162 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Admin Panel - Quản lý sách</title>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/assets/images/kiwi.png">
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
     />
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+            rel="stylesheet"
     />
-    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/style.css"/>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  </head>
-  <body>
-    <!-- Sidebar -->
-    <div class="d-flex" id="wrapper">
-      <div class="bg-light border-end" id="sidebar-wrapper">
+</head>
+<body>
+<!-- Sidebar -->
+<div class="d-flex" id="wrapper">
+    <div class="bg-light border-end" id="sidebar-wrapper">
         <div class="sidebar-heading text-dark p-3">Quản lý sách</div>
         <div class="list-group list-group-flush">
-          <a
-            href="/"
-            class="list-group-item list-group-item-action bg-light text-dark"
+            <a
+                    href="/"
+                    class="list-group-item list-group-item-action bg-light text-dark"
             >Trang chủ</a
-          >
-          <a
-            href="#"
-            class="list-group-item list-group-item-action bg-light text-dark"
+            >
+            <a
+                    href="#"
+                    class="list-group-item list-group-item-action bg-light text-dark"
             >Đăng nhập(coming soon)</a
-          >
-          <a
-            href="#"
-            class="list-group-item list-group-item-action bg-light text-dark"
+            >
+            <a
+                    href="#"
+                    class="list-group-item list-group-item-action bg-light text-dark"
             >Đăng kí(coming soon)</a
-          >
-          <a
-            href="#"
-            class="list-group-item list-group-item-action bg-light text-dark"
+            >
+            <a
+                    href="#"
+                    class="list-group-item list-group-item-action bg-light text-dark"
             >Cài đặt(coming soon)</a
-          >
-          <a
-            href="#"
-            class="list-group-item list-group-item-action bg-light text-dark"
+            >
+            <a
+                    href="#"
+                    class="list-group-item list-group-item-action bg-light text-dark"
             >Đăng xuất(coming soon)</a
-          >
+            >
         </div>
-      </div>
+    </div>
 
-      <!-- Page Content -->
-      <div id="page-content-wrapper">
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
         <!-- Navbar -->
         <nav
-          class="navbar navbar-expand-lg navbar-light bg-light border-bottom"
+                class="navbar navbar-expand-lg navbar-light bg-light border-bottom"
         >
-          <div class="container-fluid">
-            <button class="btn btn-primary" id="menu-toggle">
-              <i class="fas fa-bars"></i>
-            </button>
-            <form action="/story/search" method="GET" class="d-flex ms-auto position-relative">
-              <input
-                class="form-control me-2"
-                type="search"
-                name="name"
-                placeholder="Nhập từ khóa tìm kiếm tên sách"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Tìm kiếm
-              </button>
-              <!-- Hộp gợi ý -->
-              <div id="suggestions" class="suggestions"></div>
-            </form>
-          </div>
+            <div class="container-fluid">
+                <button class="btn btn-primary" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <form th:action="@{/story/search}" method="GET" class="d-flex ms-auto position-relative">
+                    <input
+                            class="form-control me-2"
+                            type="search"
+                            name="name"
+                            placeholder="Nhập từ khóa tìm kiếm tên sách"
+                            aria-label="Search"
+                    />
+                    <button class="btn btn-outline-success" type="submit">
+                        Tìm kiếm
+                    </button>
+                    <!-- Hộp gợi ý -->
+                    <div id="suggestions" class="suggestions"></div>
+                </form>
+            </div>
         </nav>
 
         <!-- Main Content -->
         <div class="container-fluid p-4">
-          <!-- Bộ lọc sách -->
-          <div class="row mb-4">
-            <div class="col-md-6">
-              <label for="filterCountry" class="form-label"
-                >Lọc theo quốc gia</label
-              >
-              <select class="form-select" id="filterCountry">
-                <option value="">Tất cả</option>
-                <option value="Viet Nam">Việt Nam</option>
-                <option value="USA">Mỹ</option>
-                <option value="Japan">Nhật Bản</option>
-              </select>
+            <!-- Bộ lọc sách -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label for="filterCountry" class="form-label"
+                    >Lọc theo quốc gia</label
+                    >
+                    <select class="form-select" id="filterCountry">
+                        <option value="">Tất cả</option>
+                        <option value="Viet Nam">Việt Nam</option>
+                        <option value="USA">Mỹ</option>
+                        <option value="Japan">Nhật Bản</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="filterLanguage" class="form-label"
+                    >Lọc theo quốc gia</label
+                    >
+                    <select class="form-select" id="filterLanguage">
+                        <option value="">Tất cả</option>
+                        <option value="Vietnamese">Tiếng Việt</option>
+                        <option value="English">Tiếng Anh</option>
+                        <option value="Japanese">Tiếng Nhật</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-md-6">
-              <label for="filterLanguage" class="form-label"
-                >Lọc theo quốc gia</label
-              >
-              <select class="form-select" id="filterLanguage">
-                <option value="">Tất cả</option>
-                <option value="Vietnamese">Tiếng Việt</option>
-                <option value="English">Tiếng Anh</option>
-                <option value="Japanese">Tiếng Nhật</option>
-              </select>
-            </div>
-          </div>
 
-          <!-- Bảng hiển thị sách -->
-          <div class="card mb-4">
-            <div class="card-header">
-              Danh sách sách
-              <button
-                class="btn btn-sm btn-secondary float-end"
-                data-bs-toggle="modal"
-                data-bs-target="#addBookModal"
-              >
-                Thêm sách mới
-              </button>
+            <!-- Bảng hiển thị sách -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    Danh sách sách
+                    <a
+                            th:href="@{/story/add}"
+                            class="btn btn-sm btn-secondary float-end"
+                    >
+                        Thêm sách mới
+                    </a>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Hình ảnh sách</th>
+                            <th>Tên sách</th>
+                            <th>Thể loại</th>
+                            <th>Quốc gia</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="s: ${stories}">
+                            <td>[[${s.storyId}]]</td>
+                            <td>
+                                <img th:src="@{|/assets/images/${s.storyAvatarUrl}|}"
+                                     class="book-image"
+                                     alt="#"
+                                />
+                            </td>
+                            <td>[[${s.storyNameVietNam}]]</td>
+                            <td>[[${s.category.cateNameVietNam}]]</td>
+                            <td>[[${s.areaStory}]]</td>
+                            <td>
+                                <a th:href="@{|/story/detail/${s.storyId}|}" class="btn btn-sm btn-primary">Chỉnh
+                                    sửa</a>
+                                <a th:href="@{|/story/delete/${s.storyId}|}" class="btn btn-sm btn-danger">Xóa</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="card-body">
-              <table th:each="p: ${items_story}" class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Hình ảnh sách</th>
-                    <th>Tên sách</th>
-                    <th>Thể loại</th>
-                    <th>Quốc gia</th>
-                    <th>Hành động</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>
-                      <img th:src="@{|/assets/images/${p.storyAvatarUrl}|}"
-                        class="book-image"
-                        alt="#"
-                      />
-                    </td>
-                    <td>[[${p.storyNameVietNam}]]</td>
-                    <td>[[${p.category.cateNameVietNam}]]</td>
-                    <td>[[${p.areaStory}]]</td>
-                    <td>
-                      <button class="btn btn-sm btn-primary">Chỉnh sửa</button>
-                      <a th:href="@{|/story/delete/${p.storyId]}|}" class="btn btn-sm btn-danger">Xóa</a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
+</div>
 
-    <!-- Modal Thêm sách mới -->
-    <div
-      class="modal fade"
-      id="addBookModal"
-      tabindex="-1"
-      aria-labelledby="addBookModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addBookModalLabel">Thêm sách mới</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form id="addBookForm">
-              <div class="mb-3">
-                <label for="bookName" class="form-label">Tên sách</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="bookName"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="bookAuthor" class="form-label">Tác giả</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="bookAuthor"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="bookCountry" class="form-label">Quốc gia</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="bookCountry"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="bookLanguage" class="form-label">Ngôn ngữ</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="bookLanguage"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="bookImage" class="form-label">Hình ảnh sách</label>
-                <input
-                  type="file"
-                  class="form-control"
-                  id="bookImage"
-                  accept="image/*"
-                />
-              </div>
-              <button type="submit" class="btn btn-primary">Thêm sách</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script src="/assets/js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+<script src="/assets/js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

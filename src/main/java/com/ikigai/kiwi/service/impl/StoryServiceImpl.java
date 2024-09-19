@@ -1,6 +1,11 @@
 package com.ikigai.kiwi.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ikigai.kiwi.dao.CategoryDAO;
 import com.ikigai.kiwi.dao.StoryDAO;
+import com.ikigai.kiwi.entity.Category;
 import com.ikigai.kiwi.entity.Story;
 import com.ikigai.kiwi.service.StoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +19,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class StoryServiceImpl implements StoryService {
     @Autowired
     StoryDAO storyDAO;
+    @Autowired
+    CategoryDAO categoryDAO;
 
     @Override
     public <S extends Story> S save(S entity) {
@@ -178,5 +186,31 @@ public class StoryServiceImpl implements StoryService {
     @Override
     public List<Story> findByNameStory(String name) {
         return storyDAO.findByNameStory(name);
+    }
+
+    @Override
+    public List<Story> findAllStoryNotDeleted() {
+        return storyDAO.findAllStoryNotDeleted();
+    }
+
+    @Override
+    public void deleteStory(Integer id) {
+        storyDAO.deleteStory(id);
+    }
+
+    @Override
+    public Story create(JsonNode storyData) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        Story story = mapper.convertValue(storyData, Story.class);
+        storyDAO.save(story);
+
+        TypeReference<List<Category>> type = new TypeReference<List<Category>>() {
+        };
+        List<Category> details = mapper.convertValue(storyData.get("category"), type)
+                .stream().peek(d -> d.setStory(story)).collect(Collectors.toList());
+        categoryDAO.saveAll(details);
+
+        return story;
     }
 }

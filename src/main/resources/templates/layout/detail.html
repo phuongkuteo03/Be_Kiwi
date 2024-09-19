@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Admin Panel - Quản lý sách</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/images/kiwi.png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="d-flex" id="wrapper">
+      <div class="bg-light border-end" id="sidebar-wrapper">
+        <div class="sidebar-heading text-dark p-3">Quản lý sách</div>
+        <div class="list-group list-group-flush">
+          <a
+            href="/"
+            class="list-group-item list-group-item-action bg-light text-dark"
+            >Trang chủ</a
+          >
+          <a
+            href="#"
+            class="list-group-item list-group-item-action bg-light text-dark"
+            >Đăng nhập(coming soon)</a
+          >
+          <a
+            href="#"
+            class="list-group-item list-group-item-action bg-light text-dark"
+            >Đăng kí(coming soon)</a
+          >
+          <a
+            href="#"
+            class="list-group-item list-group-item-action bg-light text-dark"
+            >Cài đặt(coming soon)</a
+          >
+          <a
+            href="#"
+            class="list-group-item list-group-item-action bg-light text-dark"
+            >Đăng xuất(coming soon)</a
+          >
+        </div>
+      </div>
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <!-- Navbar -->
+        <nav
+          class="navbar navbar-expand-lg navbar-light bg-light border-bottom"
+        >
+          <div class="container-fluid">
+            <button class="btn btn-primary" id="menu-toggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <form
+              th:action="@{/story/search}"
+              method="GET"
+              class="d-flex ms-auto position-relative"
+            >
+              <input
+                class="form-control me-2"
+                type="search"
+                name="name"
+                placeholder="Nhập từ khóa tìm kiếm tên sách"
+                aria-label="Search"
+              />
+              <button class="btn btn-outline-success" type="submit">
+                Tìm kiếm
+              </button>
+              <!-- Hộp gợi ý -->
+              <div id="suggestions" class="suggestions"></div>
+            </form>
+          </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container-fluid p-4">
+          <!-- Hiển thị chi tiết sách -->
+          <div class="card mb-4" th:object="${truyen}">
+            <div class="card-header">Thông tin chi tiết sách</div>
+            <div class="card-body">
+              <form th:action="@{/story/update}" method="POST">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <input type="hidden" th:field="*{storyId}">
+                      <label for="storyNameVietNam" class="form-label"
+                        >storyNameVietNam</label
+                      >
+                      <input
+                        th:field="*{storyNameVietNam}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameVietNam"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameEnglish" class="form-label"
+                        >storyNameEnglish</label
+                      >
+                      <input
+                        th:field="*{storyNameEnglish}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameEnglish"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameFrance" class="form-label"
+                        >storyNameFrance</label
+                      >
+                      <input
+                        th:field="*{storyNameFrance}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameFrance"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameDenmark" class="form-label"
+                        >storyNameDenmark</label
+                      >
+                      <input
+                        th:field="*{storyNameDenmark}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameDenmark"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameJapan" class="form-label"
+                        >storyNameJapan</label
+                      >
+                      <input
+                        th:field="*{storyNameJapan}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameJapan"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameKorea" class="form-label"
+                        >storyNameKorea</label
+                      >
+                      <input
+                        th:field="*{storyNameKorea}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameKorea"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameSq" class="form-label"
+                        >storyNameSq</label
+                      >
+                      <input
+                        th:field="*{storyNameSq}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameSq"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameArgentina" class="form-label"
+                        >storyNameArgentina</label
+                      >
+                      <input
+                        th:field="*{storyNameArgentina}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameArgentina"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameZh" class="form-label"
+                        >storyNameZh</label
+                      >
+                      <input
+                        th:field="*{storyNameZh}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameZh"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameEstonia" class="form-label"
+                        >storyNameEstonia</label
+                      >
+                      <input
+                        th:field="*{storyNameEstonia}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameEstonia"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameEl" class="form-label"
+                        >storyNameEl</label
+                      >
+                      <input
+                        th:field="*{storyNameEl}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameEl"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameIt" class="form-label"
+                        >storyNameIt</label
+                      >
+                      <input
+                        th:field="*{storyNameIt}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameIt"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNamePt" class="form-label"
+                        >storyNamePt</label
+                      >
+                      <input
+                        th:field="*{storyNamePt}"
+                        type="text"
+                        class="form-control"
+                        id="storyNamePt"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameRusia" class="form-label"
+                        >storyNameRusia</label
+                      >
+                      <input
+                        th:field="*{storyNameRusia}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameRusia"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameRs" class="form-label"
+                        >storyNameRs</label
+                      >
+                      <input
+                        th:field="*{storyNameRs}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameRs"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameSo" class="form-label"
+                        >storyNameSo</label
+                      >
+                      <input
+                        th:field="*{storyNameSo}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameSo"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameThailand" class="form-label"
+                        >storyNameThailand</label
+                      >
+                      <input
+                        th:field="*{storyNameThailand}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameThailand"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="storyNameUkraine" class="form-label"
+                        >storyNameUkraine</label
+                      >
+                      <input
+                        th:field="*{storyNameUkraine}"
+                        type="text"
+                        class="form-control"
+                        id="storyNameUkraine"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="cateNameVietNam" class="form-label"
+                        >cateNameVietNam</label
+                      >
+                      <input
+                        th:field="*{category.cateNameVietNam}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameVietNam"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameEnglish" class="form-label"
+                        >cateNameEnglish</label
+                      >
+                      <input
+                        th:field="*{category.cateNameEnglish}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameEnglish"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameFrance" class="form-label"
+                        >cateNameFrance</label
+                      >
+                      <input
+                        th:field="*{category.cateNameFrance}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameFrance"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameDenmark" class="form-label"
+                        >cateNameDenmark</label
+                      >
+                      <input
+                        th:field="*{category.cateNameDenmark}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameDenmark"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameJapan" class="form-label"
+                        >cateNameJapan</label
+                      >
+                      <input
+                        th:field="*{category.cateNameJapan}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameJapan"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameKorea" class="form-label"
+                        >cateNameKorea</label
+                      >
+                      <input
+                        th:field="*{category.cateNameKorea}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameKorea"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameSq" class="form-label"
+                        >cateNameSq</label
+                      >
+                      <input
+                        th:field="*{category.cateNameSq}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameSq"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameArgentina" class="form-label"
+                        >cateNameArgentina</label
+                      >
+                      <input
+                        th:field="*{category.cateNameArgentina}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameArgentina"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameZh" class="form-label"
+                        >cateNameZh</label
+                      >
+                      <input
+                        th:field="*{category.cateNameZh}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameZh"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameEstonia" class="form-label"
+                        >cateNameEstonia</label
+                      >
+                      <input
+                        th:field="*{category.cateNameEstonia}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameEstonia"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameEl" class="form-label"
+                        >cateNameEl</label
+                      >
+                      <input
+                        th:field="*{category.cateNameEl}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameEl"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameIt" class="form-label"
+                        >cateNameIt</label
+                      >
+                      <input
+                        th:field="*{category.cateNameIt}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameIt"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNamePt" class="form-label"
+                        >cateNamePt</label
+                      >
+                      <input
+                        th:field="*{category.cateNamePt}"
+                        type="text"
+                        class="form-control"
+                        id="cateNamePt"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameRusia" class="form-label"
+                        >cateNameRusia</label
+                      >
+                      <input
+                        th:field="*{category.cateNameRusia}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameRusia"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameRs" class="form-label"
+                        >cateNameRs</label
+                      >
+                      <input
+                        th:field="*{category.cateNameRs}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameRs"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameSo" class="form-label"
+                        >cateNameSo</label
+                      >
+                      <input
+                        th:field="*{category.cateNameSo}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameSo"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameThailand" class="form-label"
+                        >cateNameThailand</label
+                      >
+                      <input
+                        th:field="*{category.cateNameThailand}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameThailand"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="cateNameUkraine" class="form-label"
+                        >cateNameUkraine</label
+                      >
+                      <input
+                        th:field="*{category.cateNameUkraine}"
+                        type="text"
+                        class="form-control"
+                        id="cateNameUkraine"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="storyAvatarUrl" class="form-label"
+                    >Hình ảnh sách</label
+                  >
+                  <input
+                    th:field="*{storyAvatarUrl}"
+                    type="file"
+                    class="form-control"
+                    id="storyAvatarUrl"
+                    accept="image/*"
+                  />
+                </div>
+                <div>
+                  <label for="storyData" class="form-label">Story Data</label>
+                  <textarea
+                    th:field="*{storyData}"
+                    class="form-control"
+                    maxlength="100"
+                    rows="2"
+                    id="storyData"
+                  ></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="areaStory" class="form-label">Area Story</label>
+                  <select
+                    th:field="*{areaStory}"
+                    class="form-control"
+                    id="areaStory"
+                  >
+                    <option value=""></option>
+                    <option value="Việt Nam">Việt Nam</option>
+                    <option value="English">English</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

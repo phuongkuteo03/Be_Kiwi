@@ -15,74 +15,36 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="/assets/css/style.css"/>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <!-- Sidebar -->
-<div class="d-flex" id="wrapper">
-    <div class="bg-light border-end" id="sidebar-wrapper">
-        <div class="sidebar-heading text-dark p-3">Quản lý sách</div>
-        <div class="list-group list-group-flush">
-            <a
-                    href="/"
-                    class="list-group-item list-group-item-action bg-light text-dark"
-            >Trang chủ</a
+<div class="sidebar">
+    <ul>
+        <li>
+            <a href="/"><i class="fas fa-home"></i><span>Trang Chủ</span></a>
+        </li>
+        <li>
+            <a href="#"><i class="fas fa-cog"></i><span>Cài Đặt</span></a>
+        </li>
+        <li>
+            <a href="#"
+            ><i class="fas fa-sign-out-alt"></i><span>Đăng Xuất</span></a
             >
-            <a
-                    href="#"
-                    class="list-group-item list-group-item-action bg-light text-dark"
-            >Đăng nhập(coming soon)</a
-            >
-            <a
-                    href="#"
-                    class="list-group-item list-group-item-action bg-light text-dark"
-            >Đăng kí(coming soon)</a
-            >
-            <a
-                    href="#"
-                    class="list-group-item list-group-item-action bg-light text-dark"
-            >Cài đặt(coming soon)</a
-            >
-            <a
-                    href="#"
-                    class="list-group-item list-group-item-action bg-light text-dark"
-            >Đăng xuất(coming soon)</a
-            >
-        </div>
-    </div>
+        </li>
+    </ul>
+</div>
 
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-        <!-- Navbar -->
-        <nav
-                class="navbar navbar-expand-lg navbar-light bg-light border-bottom"
-        >
-            <div class="container-fluid">
-                <button class="btn btn-primary" id="menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <form
-                        th:action="@{/story/search}"
-                        method="GET"
-                        class="d-flex ms-auto position-relative"
-                >
-                    <input
-                            class="form-control me-2"
-                            type="search"
-                            name="name"
-                            placeholder="Nhập từ khóa tìm kiếm tên sách"
-                            aria-label="Search"
-                    />
-                    <button class="btn btn-outline-success" type="submit">
-                        Tìm kiếm
-                    </button>
-                    <!-- Hộp gợi ý -->
-                    <div id="suggestions" class="suggestions"></div>
-                </form>
-            </div>
-        </nav>
-
+<!-- Header -->
+<div class="header">
+    <form th:action="@{/story/search}" method="GET">
+        <input type="text" name ="name" placeholder="Tìm kiếm sách..." class="search-bar" />
+        <button type="submit" class="search-button">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+</div>
         <!-- Main Content -->
         <div class="container-fluid p-4">
             <!-- Hiển thị chi tiết sách -->
@@ -557,7 +519,7 @@
                                     class="form-control"
                                     id="areaStory"
                             >
-                                <option value=""></option>
+                                <option value="Chọn"></option>
                                 <option value="Việt Nam">Việt Nam</option>
                                 <option value="English">English</option>
                             </select>
@@ -567,8 +529,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
 <script src="/assets/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

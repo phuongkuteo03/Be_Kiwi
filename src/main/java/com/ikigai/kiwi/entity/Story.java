@@ -14,7 +14,7 @@ import java.util.List;
 public class Story implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer storyId;
+    Integer storyId;
 
     @Column(columnDefinition = "nvarchar(255)")
     String storyNameVietNam;
@@ -59,10 +59,13 @@ public class Story implements Serializable {
     @Column(columnDefinition = "nvarchar(50)")
     String areaStory;
 
+    boolean isDeleted;
+
     @JsonIgnore
     @OneToMany(mappedBy = "story")
     List<Content> content;
 
-    @OneToOne @JoinColumn(name = "cateId")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cateId")
     private Category category;
 }

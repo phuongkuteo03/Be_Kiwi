@@ -1,5 +1,6 @@
 package com.ikigai.kiwi.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.ikigai.kiwi.entity.Story;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -76,4 +77,10 @@ public interface StoryService {
     <S extends Story> List<S> findAll(Example<S> example, Sort sort);
 
     List<Story> findByNameStory(String name);
+
+    List<Story> findAllStoryNotDeleted();
+
+    void deleteStory(Integer id);
+
+    Story create(JsonNode storyData);
 }

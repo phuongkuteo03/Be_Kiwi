@@ -27,6 +27,10 @@ public class StoriesService {
         return storiesRepository.findById(_id).get();
     }
 
+    public Stories findStoriesByName(String mStoryName){
+        return storiesRepository.findById(mStoryName).get();
+    }
+
     public Stories updateStories(Stories stories){
         return storiesRepository.save(stories);
     }

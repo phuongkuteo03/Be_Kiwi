@@ -20,14 +20,13 @@ public class StoryController {
 
     @GetMapping("/search")
     public String timKiemSach(@RequestParam("name") String name, HttpServletRequest request, Model model) {
-//        model.addAttribute("stories", storyService.findByNameStory(name));
+        model.addAttribute("stories", storyService.findStoriesByName(name));
         return "layout/index";
     }
 
     @GetMapping("/add")
     public String createStory(HttpServletRequest request, Model model) {
         model.addAttribute("stories", new Stories());
-        model.addAttribute("cates", new CategoryStories());
         return "layout/create";
     }
 

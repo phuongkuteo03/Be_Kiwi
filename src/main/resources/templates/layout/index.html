@@ -67,8 +67,8 @@
     <table class="book-list-table">
         <thead>
         <tr>
-            <th>STT</th>
             <th>Hình ảnh sách</th>
+            <th>StoryID</th>
             <th>Tên sách</th>
             <th>Thể loại</th>
             <th>Quốc gia</th>
@@ -77,25 +77,25 @@
         </thead>
         <tbody>
         <tr th:each="s: ${stories}">
-            <td>[[${s.storyId}]]</td>
             <td>
                 <img
-                        th:src="@{|/assets/images/${s.storyAvatarUrl}|}"
+                        th:src="@{|${s.mStoryAvatarUrl}|}"
                         class="book-image"
                         alt="#"
                 />
             </td>
-            <td>[[${s.storyNameVietNam}]]</td>
-            <td>[[${s.category.cateNameVietNam}]]</td>
+            <td>[[${s.mStoryId}]]</td>
+            <td>[[${s.mStoryName.vi}]]</td>
+            <td>[[${s.mCateName.vi}]]</td>
             <td>[[${s.areaStory}]]</td>
             <td>
                 <a
-                        th:href="@{|/story/detail/${s.storyId}|}"
+                        th:href="@{|/story/detail/${s._id}|}"
                         class="btn btn-sm btn-primary"
                 >Chỉnh sửa</a
                 >
                 <a
-                        th:href="@{|/story/delete/${s.storyId}|}"
+                        th:href="@{|/story/delete/${s._id}|}"
                         class="btn btn-sm btn-danger"
                 >Xóa</a
                 >

@@ -23,7 +23,7 @@ public class Stories {
     String rate;
     boolean isFavourite;
 
-    ArrayList<Object> mStoryData;
+    String mStoryData;
     String areaStory;
     boolean isDisableCate;
     Integer __v;

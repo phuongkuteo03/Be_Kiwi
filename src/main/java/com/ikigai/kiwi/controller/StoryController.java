@@ -31,17 +31,20 @@ public class StoryController {
     }
 
     @PostMapping("/add")
-    public String addStory(@ModelAttribute("stories") Stories stories, @ModelAttribute("cates") CategoryStories cates , Model model) {
+    public String addStory(@ModelAttribute("stories") Stories stories, Model model) {
+        storyService.updateStories(stories);
         return "redirect:/";
     }
 
     @GetMapping(value = "/detail/{id}")
-    public String detailStory(@PathVariable("id") Integer id, HttpServletRequest request, Model model) {
+    public String detailStory(@PathVariable("id") String id, HttpServletRequest request, Model model) {
+        model.addAttribute("truyen", storyService.findStoriesByID(id));
         return "layout/detail";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String updateStory(@ModelAttribute("truyen") Stories truyen, Model model) {
+        storyService.updateStories(truyen);
         return "redirect:/";
     }
 

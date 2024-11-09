@@ -19,13 +19,19 @@
 <div class="sidebar">
     <ul>
         <li>
-            <a href="/"><i class="fas fa-home"></i><span>Trang Chủ</span></a>
+            <a th:href="@{/}"><i class="fas fa-home"></i><span>Trang Chủ</span></a>
         </li>
         <li>
-            <a href="#"><i class="fas fa-cog"></i><span>Cài Đặt</span></a>
+            <a th:href="@{/story/add}"><i class="fas fa-home"></i><span>Thêm câu chuyện</span></a>
         </li>
         <li>
-            <a href="#"
+            <a th:href="@{/}"><i class="fas fa-home"></i><span>Quản lý danh mục</span></a>
+        </li>
+        <li>
+            <a th:href="@{/}"><i class="fas fa-cog"></i><span>Cài Đặt</span></a>
+        </li>
+        <li>
+            <a th:href="@{/}"
             ><i class="fas fa-sign-out-alt"></i><span>Đăng Xuất</span></a
             >
         </li>
@@ -57,10 +63,6 @@
                 <!-- Thêm các quốc gia khác nếu cần -->
             </select>
         </div>
-        <a class="add-button" th:href="@{/story/add}">
-            <i class="fas fa-plus-circle"></i>
-            Thêm sách mới
-        </a>
     </div>
 
     <!-- Bảng danh sách sách -->
@@ -85,8 +87,8 @@
                 />
             </td>
             <td>[[${s.mStoryId}]]</td>
-            <td>[[${s.mStoryName.vi}]]</td>
-            <td>[[${s.mCateName.vi}]]</td>
+            <td>[[${s.mStoryName}]]</td>
+            <td>[[${s.mCateName}]]</td>
             <td>[[${s.areaStory}]]</td>
             <td>
                 <a

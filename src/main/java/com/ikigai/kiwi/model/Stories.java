@@ -1,5 +1,6 @@
 package com.ikigai.kiwi.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,12 +8,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Document(collection = "stories")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Stories {
+
     @Id
     String _id;
     String mStoryId;
@@ -23,7 +26,7 @@ public class Stories {
     String rate;
     boolean isFavourite;
 
-    String mStoryData;
+    ArrayList<String> mStoryData;
     String areaStory;
     boolean isDisableCate;
     Integer __v;

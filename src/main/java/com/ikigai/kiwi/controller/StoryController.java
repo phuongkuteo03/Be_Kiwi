@@ -1,9 +1,14 @@
 package com.ikigai.kiwi.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.ikigai.kiwi.model.CategoryStories;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.ikigai.kiwi.model.Stories;
@@ -11,13 +16,16 @@ import com.ikigai.kiwi.service.StoriesService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/story")
 public class StoryController {
 
     @Autowired
     StoriesService storyService;
-
+    ObjectMapper objectMapper = new ObjectMapper();
     @GetMapping("/search")
     public String timKiemSach(@RequestParam("name") String name, HttpServletRequest request, Model model) {
         model.addAttribute("stories", storyService.findStoriesByName(name));
@@ -31,25 +39,51 @@ public class StoryController {
     }
 
     @PostMapping("/add")
-    public String addStory(@ModelAttribute("stories") Stories stories, Model model) {
-        storyService.updateStories(stories);
-        return "redirect:/";
+    public String addStory(String mStoryName, String mStoryData, String mStoryAvatarUrl,String mCateId,String areaStory, Model model) {
+        try {
+            storyService.CreateStories(mStoryName, mStoryData, mStoryAvatarUrl,mCateId,areaStory);
+            return "redirect:/";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "layout/error";
+        }
     }
 
-    @GetMapping(value = "/detail/{id}")
-    public String detailStory(@PathVariable("id") String id, HttpServletRequest request, Model model) {
-        model.addAttribute("truyen", storyService.findStoriesByID(id));
+    @PatchMapping("/update/{id}")
+    public String updateStory(@PathVariable("id") String id, @RequestParam Map<String, String> updates, Model model) {
+        try {
+            storyService.updateStory(id, updates);
+            return "redirect:/";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "layout/error";
+        }
+    }
+
+    @GetMapping("/detail/{id}")
+    public String detailStory(@PathVariable("id") String id, Model model) {
+        Stories story = storyService.findStoriesByID(id);
+        if (story != null) {
+            try {
+                ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+                model.addAttribute("mStoryNameJson", objectMapper.writeValueAsString(story.getMStoryName()));
+                model.addAttribute("mStoryDataJson", objectMapper.writeValueAsString(story.getMStoryData()));
+            } catch (Exception e) {
+                model.addAttribute("errorMessage", "Lỗi format json: " + e.getMessage());
+            }
+        }
+        model.addAttribute("stories", story);
         return "layout/detail";
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateStory(@ModelAttribute("truyen") Stories truyen, Model model) {
-        storyService.updateStories(truyen);
-        return "redirect:/";
-    }
-
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteStory(@PathVariable("id") Integer id, HttpServletRequest request, Model model) {
-        return "redirect:/";
+    @DeleteMapping("/delete/{id}")
+    public String deleteStory(@PathVariable("id") String id, Model model){
+        try {
+            storyService.deleteStory(id);
+            return "redirect:/";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "layout/error";
+        }
     }
 }

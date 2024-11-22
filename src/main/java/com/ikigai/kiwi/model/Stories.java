@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Document(collection = "stories")
 @Data
@@ -21,12 +22,11 @@ public class Stories {
     String mStoryId;
     String mCateId;
     Object mCateName;
-    Object mStoryName;
+    Map<String, String> mStoryName;
     String mStoryAvatarUrl;
     String rate;
     boolean isFavourite;
-
-    ArrayList<String> mStoryData;
+    List<StoryData> mStoryData;
     String areaStory;
     boolean isDisableCate;
     Integer __v;

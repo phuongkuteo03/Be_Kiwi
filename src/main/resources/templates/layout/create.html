@@ -30,7 +30,7 @@
           <a th:href="@{/story/add}"><i class="fas fa-book"></i><span>Thêm câu chuyện</span></a>
         </li>
         <li>
-          <a th:href="@{/}"><i class="fas fa-list-alt"></i><span>Quản lý danh mục</span></a>
+          <a th:href="@{/category/cate}"><i class="fas fa-list-alt"></i><span>Quản lý danh mục</span></a>
         </li>
         <li>
           <a th:href="@{/}"><i class="fas fa-cog"></i><span>Cài Đặt</span></a>
@@ -62,6 +62,10 @@
       <h2>Thêm Câu Chuyện Mới</h2>
       <form th:action="@{/story/add}" method="post" class="form-group">
         <div class="mb-3">
+          <label for="mStoryId">ID câu chuyện:</label>
+          <input type="text" id="mStoryId" name="mStoryId" class="form-control" placeholder="Nhập ID câu chuyện"/>
+        </div>
+        <div class="mb-3">
           <label for="mStoryName">Tên câu chuyện:</label>
           <textarea id="mStoryName" name="mStoryName" class="form-control" rows="5" placeholder='Nhập tên câu chuyện'></textarea>
         </div>
@@ -72,20 +76,13 @@
         <div class="mb-3">
           <label for="mCateId" class="form-label">Chọn câu chuyện</label>
           <select id="mCateId" name="mCateId" class="form-control">
-            <option value="Chọn"></option>
-            <option value="CATE00000000001">CATE00000000001</option>
-            <option value="CATE00000000002">CATE00000000002</option>
+            <option>Chọn</option>
+            <option th:each="category : ${categorystories}" th:value="${category.mCateId}" th:text="${category.mCateName['vi']} + '_' +${category.mCateId}"></option>
           </select>
         </div>
         <div class="mb-3">
           <label for="mStoryAvatarUrl">URL Ảnh đại diện câu chuyện:</label>
-          <input
-                  type="text"
-                  id="mStoryAvatarUrl"
-                  name="mStoryAvatarUrl"
-                  class="form-control"
-                  placeholder="Nhập URL ảnh đại diện"
-          />
+          <input type="text" id="mStoryAvatarUrl" name="mStoryAvatarUrl" class="form-control" placeholder="Nhập URL ảnh đại diện"/>
         </div>
         <div class="mb-3">
           <label for="areaStory" class="form-label">Area Story</label>

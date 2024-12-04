@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.ikigai.kiwi.model.CategoryStories;
+import com.ikigai.kiwi.service.CategoryStoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,23 +26,21 @@ public class StoryController {
 
     @Autowired
     StoriesService storyService;
-    ObjectMapper objectMapper = new ObjectMapper();
-    @GetMapping("/search")
-    public String timKiemSach(@RequestParam("name") String name, HttpServletRequest request, Model model) {
-        model.addAttribute("stories", storyService.findStoriesByName(name));
-        return "layout/index";
-    }
+    @Autowired
+    CategoryStoriesService categoryStoriesService;
 
     @GetMapping("/add")
     public String createStory(HttpServletRequest request, Model model) {
         model.addAttribute("stories", new Stories());
+        List<CategoryStories> categories = categoryStoriesService.findAll();
+        model.addAttribute("categorystories", categories);
         return "layout/create";
     }
 
     @PostMapping("/add")
-    public String addStory(String mStoryName, String mStoryData, String mStoryAvatarUrl,String mCateId,String areaStory, Model model) {
+    public String addStory(String mStoryId,String mStoryName, String mStoryData, String mStoryAvatarUrl,String mCateId,String areaStory, Model model) {
         try {
-            storyService.CreateStories(mStoryName, mStoryData, mStoryAvatarUrl,mCateId,areaStory);
+            storyService.CreateStories(mStoryId,mStoryName, mStoryData, mStoryAvatarUrl,mCateId,areaStory);
             return "redirect:/";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
@@ -63,6 +62,7 @@ public class StoryController {
     @GetMapping("/detail/{id}")
     public String detailStory(@PathVariable("id") String id, Model model) {
         Stories story = storyService.findStoriesByID(id);
+        List<CategoryStories> categories = categoryStoriesService.findAll();
         if (story != null) {
             try {
                 ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
@@ -72,6 +72,7 @@ public class StoryController {
                 model.addAttribute("errorMessage", "Lỗi format json: " + e.getMessage());
             }
         }
+        model.addAttribute("categorystories", categories);
         model.addAttribute("stories", story);
         return "layout/detail";
     }
@@ -85,5 +86,12 @@ public class StoryController {
             model.addAttribute("errorMessage", e.getMessage());
             return "layout/error";
         }
+    }
+
+    @GetMapping("/search")
+    public String searchStory(@RequestParam("name") String name, Model model) {
+        List<Stories> foundStories = storyService.searchStoryByName(name);
+        model.addAttribute("stories", foundStories);
+        return "layout/index";
     }
 }

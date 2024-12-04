@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Admin Panel - Quản lý sách</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/images/kiwi.png" />
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+            rel="stylesheet"
+    />
+    <link th:href="@{/assets/css/styles.css}" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<!-- Sidebar -->
+<button id="toggleSidebarBtn"><i class="fas fa-bars"></i></button>
+<div class="sidebar">
+    <ul>
+        <li>
+            <a th:href="@{/}"><i class="fas fa-home"></i><span>Trang Chủ</span></a>
+        </li>
+        <li>
+            <a th:href="@{/story/add}"><i class="fas fa-book"></i><span>Thêm câu chuyện</span></a>
+        </li>
+        <li>
+            <a th:href="@{/category/cate}"><i class="fas fa-list-alt"></i><span>Quản lý danh mục</span></a>
+        </li>
+        <li>
+            <a th:href="@{/}"><i class="fas fa-cog"></i><span>Cài Đặt</span></a>
+        </li>
+        <li>
+            <a th:href="@{/}"
+            ><i class="fas fa-sign-out-alt"></i><span>Đăng Xuất</span></a
+            >
+        </li>
+    </ul>
+</div>
+
+<!-- Header -->
+<div class="header">
+    <form th:action="@{/story/search}" method="GET">
+        <input
+                type="text"
+                name="name"
+                placeholder="Tìm kiếm sách..."
+                class="search-bar"
+        />
+        <button type="submit" class="search-button">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+</div>
+<!-- Main Content -->
+<div class="content">
+    <div class="card mb-4" th:object="${categories}">
+        <div class="card-header">Chi tiết danh mục</div>
+        <div class="card-body">
+            <form th:action="@{/category/updatecate/{id}(id=${categories._id})}" method="post" class="form-group">
+                <input type="hidden" name="_method" value="PATCH">
+                <div class="mb-3">
+                    <label for="mCateId">ID danh mục</label>
+                    <input type="text" id="mCateId" name="mCateId" class="form-control" th:value="${categories.mCateId}" placeholder="Nhập ID danh mục"/>
+                </div>
+                <div class="mb-3">
+                    <label for="mCateName">Tên danh mục:</label>
+                    <textarea id="mCateName" name="mCateName" class="form-control" rows="10" th:utext="${mCateNameJson}" placeholder="Nhập tên danh muc"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="mCateAvatarUrl">URL Ảnh đại diện danh mục:</label>
+                    <input type="text" id="mCateAvatarUrl" name="mCateAvatarUrl" class="form-control" th:value="${categories.mCateAvatarUrl}" placeholder="Nhập URL danh mục"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>document
+        .getElementById("toggleSidebarBtn")
+        .addEventListener("click", function () {
+          document.querySelector(".sidebar").classList.toggle("hidden");
+          document.querySelector(".content").classList.toggle("collapsed");
+  });
+</script>
+</body>
+</html>

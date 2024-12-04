@@ -6,14 +6,8 @@
     <title>Quản Lý Sách Thư Viện</title>
     <link th:href="@{/assets/css/styles.css}" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/x-icon" href="/assets/images/kiwi.png" />
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
 </head>
 <body>
 <!-- Sidebar -->
@@ -27,7 +21,7 @@
             <a th:href="@{/story/add}"><i class="fas fa-book"></i><span>Thêm câu chuyện</span></a>
         </li>
         <li>
-            <a th:href="@{/}"><i class="fas fa-list-alt"></i><span>Quản lý danh mục</span></a>
+            <a th:href="@{/category/cate}"><i class="fas fa-list-alt"></i><span>Quản lý danh mục</span></a>
         </li>
         <li>
             <a th:href="@{/}"><i class="fas fa-cog"></i><span>Cài Đặt</span></a>
@@ -57,23 +51,27 @@
     <!-- Bộ lọc -->
     <div class="filter-container">
         <div class="filter-group">
-            <label for="country-filter">Lọc theo quốc gia</label>
-            <select id="country-filter">
-                <option value="all">Tất cả</option>
-                <option value="vietnam">Việt Nam</option>
-                <option value="us">Mỹ</option>
-            </select>
+            <label for="cate-filter">Lọc theo danh mục</label>
+            <form th:action="@{/home/index}" method="GET">
+                <select id="cate-filter" name="category">
+                    <option value="">Tất cả</option>
+                    <option th:each="category : ${categories}"
+                            th:value="${category.mCateId}"
+                            th:text="${category.mCateName['vi']} + '_' +${category.mCateId}"></option>
+                </select>
+                <button type="submit">Lọc</button>
+            </form>
         </div>
     </div>
 
-    <!-- Bảng danh sách sách -->
+
     <table class="book-list-table">
         <thead>
         <tr>
             <th>Hình ảnh sách</th>
             <th>StoryID</th>
             <th>Tên sách</th>
-            <th>Thể loại</th>
+            <th>Danh mục</th>
             <th>Quốc gia</th>
             <th>Hành động</th>
         </tr>
@@ -83,9 +81,9 @@
             <td>
                 <img th:src="@{|${s.mStoryAvatarUrl}|}" class="book-image" alt="#"/>
             </td>
-            <td>[[${s._id}]]</td>
+            <td>[[${s.mStoryId}]]</td>
             <td>[[${s.mStoryName['vi']}]]</td>
-            <td>[[${s.mCateName}]]</td>
+            <td>[[${s.mCateId}]]</td>
             <td>[[${s.areaStory}]]</td>
             <td>
                 <a th:href="@{|/story/detail/${s._id}|}" class="btn btn-sm btn-primary">Chỉnh sửa</a>

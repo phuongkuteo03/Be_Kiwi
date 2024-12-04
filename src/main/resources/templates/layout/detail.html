@@ -30,7 +30,7 @@
         <a th:href="@{/story/add}"><i class="fas fa-book"></i><span>Thêm câu chuyện</span></a>
       </li>
       <li>
-        <a th:href="@{/}"><i class="fas fa-list-alt"></i><span>Quản lý danh mục</span></a>
+        <a th:href="@{/category/cate}"><i class="fas fa-list-alt"></i><span>Quản lý danh mục</span></a>
       </li>
       <li>
         <a th:href="@{/}"><i class="fas fa-cog"></i><span>Cài Đặt</span></a>
@@ -61,6 +61,10 @@
               <form th:action="@{/story/update/{id}(id=${stories._id})}" method="post" class="form-group">
                 <input type="hidden" name="_method" value="PATCH">
                 <div class="mb-3">
+                  <label for="mStoryId">ID câu chuyện</label>
+                  <input type="text" id="mStoryId" name="mStoryId" class="form-control" th:value="${stories.mStoryId}" placeholder="Nhập ID câu chuyện"/>
+                </div>
+                <div class="mb-3">
                   <label for="mStoryName">Tên câu chuyện:</label>
                   <textarea id="mStoryName" name="mStoryName" class="form-control" rows="10" th:utext="${mStoryNameJson}" placeholder="Nhập tên câu chuyện"></textarea>
                 </div>
@@ -70,22 +74,16 @@
                 </div>
                 <div class="mb-3">
                   <label for="mCateId" class="form-label">Câu chuyện</label>
+<!--                  <input type="text" id="mCateId" name="mCateId" class="form-control" th:value="${stories.mCateId}" placeholder="Nhập ID câu chuyện"/>-->
                   <select id="mCateId" name="mCateId" class="form-control">
-                    <option value="" th:text="'Chọn'" th:if="${stories.mCateId == null}"></option>
-                    <option value="CATE00000000001" th:selected="${stories.mCateId == 'CATE00000000001'}">CATE00000000001</option>
-                    <option value="CATE00000000002" th:selected="${stories.mCateId == 'CATE00000000002'}">CATE00000000002</option>
+                    <option value="" th:text="'Chọn câu chuyện'">Chọn câu chuyện</option>
+                    <option th:value="${stories.mCateId}" th:text="${stories.mCateId}" th:selected="${stories.mCateId}"></option>
+                    <option th:each="category : ${categorystories}" th:value="${category.mCateId}" th:text="${category.mCateId}"></option>
                   </select>
                 </div>
                 <div class="mb-3">
                   <label for="mStoryAvatarUrl">URL Ảnh đại diện câu chuyện:</label>
-                  <input
-                          type="text"
-                          id="mStoryAvatarUrl"
-                          name="mStoryAvatarUrl"
-                          class="form-control"
-                          th:value="${stories.mStoryAvatarUrl}"
-                          placeholder="Nhập URL ảnh đại diện"
-                  />
+                  <input type="text" id="mStoryAvatarUrl" name="mStoryAvatarUrl" class="form-control" th:value="${stories.mStoryAvatarUrl}" placeholder="Nhập URL ảnh đại diện"/>
                 </div>
                 <div class="mb-3">
                   <label for="areaStory" class="form-label">Area Story</label>

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Map;
+
 @Document(collection = "categorystories")
 @Data
 @NoArgsConstructor
@@ -14,9 +16,13 @@ public class CategoryStories{
     @Id
     String _id;
     String mCateId;
-    Object mCateName;
+    Map<String, String> mCateName;
     String mCateAvatarUrl;
-    String delFlg;
+    boolean delFlg;
     boolean isDisableCate;
     Integer __v;
+
+    public void setDelFlg(boolean delFlg) {
+        this.delFlg = delFlg;
+    }
 }
